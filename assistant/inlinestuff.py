@@ -32,20 +32,49 @@ from . import _ult_cache
 
 SUP_BUTTONS = [
     [
-        Button.url("• Repo •", url="https://github.com/TeamUltroid/Ultroid"),
-        Button.url("• Support •", url="t.me/UltroidSupportChat"),
+        Button.url("• Repo •", url="https://github.com/xteam-cloner"),
+        #Button.url("• Support •", url="t.me/UltroidSupportChat"),
     ],
 ]
 
+PING_ALIVE = [
+    [
+        Button.inline("PING", data="ping"),
+    ],
+]
+
+
 ofox = "https://graph.org/file/231f0049fcd722824f13b.jpg"
 gugirl = "https://graph.org/file/0df54ae4541abca96aa11.jpg"
-ultpic = "https://graph.org/file/4136aa1650bc9d4109cc5.jpg"
+ultpic = "https://telegra.ph/file/8d7b534e34e13316a7dd2.jpg"
 
 apis = [
     "QUl6YVN5QXlEQnNZM1dSdEI1WVBDNmFCX3c4SkF5NlpkWE5jNkZV",
     "QUl6YVN5QkYwenhMbFlsUE1wOXh3TVFxVktDUVJxOERnZHJMWHNn",
     "QUl6YVN5RGRPS253blB3VklRX2xiSDVzWUU0Rm9YakFLSVFWMERR",
 ]
+
+@in_pattern("ping", owner=False)
+async def ping(e):
+    res = [
+        await e.builder.article(
+            title="Userbot",
+            description="PING",
+            thumb=wb(ultpic, 0, "image/jpeg", []),
+            text=OWNER_NAME,
+            buttons=PING_ALIVE,
+        ),
+    ]
+    await e.answer(res, switch_pm="Userbot Repo.", switch_pm_param="start")
+
+@callback(data="ping", owner=False)
+async def _(event):
+    start = datetime.now()
+    end = datetime.now()
+    uptime = time_formatter((time.time() - start_time) * 1000)
+    ms = (end - start).microseconds
+    pin = f"🎯 Pong = {ms} ms\n⏰ Uptime = {uptime}"
+    await event.answer(pin, cache_time=0, alert=True)
 
 
 @in_pattern("ofox", owner=True)
